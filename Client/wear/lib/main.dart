@@ -2,137 +2,195 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:barcode_scan/barcode_scan.dart';
-import 'dart:async';
 
-void main() =>
-  runApp(MaterialApp(
-    debugShowCheckedModeBanner: false,
-    home: MyHomePage(),
-  ));
+void main() => runApp(MyApp());  
+   
+class MyApp extends StatelessWidget {  
+ @override  
+ Widget build(BuildContext context) {  
+   return MaterialApp(  
+     theme: ThemeData(  
+       primarySwatch: Colors.blue,  
+     ),  
+     home: MyHomePage(),  
+   );  
+ }  
+}  
+   
+class MyHomePage extends StatefulWidget {  
+ @override  
+ _MyHomePageState createState() => _MyHomePageState();  
+}  
+   
+class _MyHomePageState extends State<MyHomePage> {  
+ String barcode = "";  
+ Future scanCode() async {  
+   try {  
+     String barcode = await BarcodeScanner.scan();  
+     setState(() => this.barcode = barcode);  
+   } catch (e) {  
+     if (e.code == BarcodeScanner.CameraAccessDenied) {  
+       setState(() {  
+         this.barcode = 'The user did not grant the camera permission!';  
+       });  
+     } else {  
+       setState(() => this.barcode = 'Unknown error: $e');  
+     }  
+   }  
+ }  
+   
+ @override  
+ Widget build(BuildContext context) {  
+   return Scaffold(  
+     appBar: AppBar(  
+       title: Text('Flutter Barcode Scan'),  
+     ),  
+     body: Center(  
+       child: Column(  
+         mainAxisAlignment: MainAxisAlignment.center,  
+         children: <Widget>[  
+           Text(barcode),  
+         ],  
+       ),  
+     ),  
+     floatingActionButton: FloatingActionButton(  
+       onPressed: scanCode,  
+       tooltip: 'Scan',  
+       child: Icon(Icons.scanner),  
+     ),  
+   );  
+ }  
+}  
 
-class HomePage extends StatefulWidget{
-  @override
-  _HomePageState createState() => _HomePageState();
-}
+// void main() =>
+//   runApp(MaterialApp(
+//     debugShowCheckedModeBanner: false,
+//     home: MyHomePage(),
+//   ));
 
-class _HomePageState extends State<HomePage> {
-  String result = "Hey There";
-  Future _scanQR() async{
-    try{
-      String qrResult = await BarcodeScanner.scan(); //open activity when scan method is called
-      setState(() {
-        result = qrResult;
-      });
-    }
-    on PlatformException catch (except){
-      if(except.code == BarcodeScanner.cameraAccessDenied){
-        setState(() {
-          result = "Camera permission was not granted";
-        });
-      }else{
-        setState(() {
-          result = "Unknown error occurred $except";
-        });
-      }
-    }
-    on FormatException{
-      setState(() {
-        result = "Back button was pressed before scanning was done";
-      });
-    }
-    catch(except){
-      setState(() {
-        result = "Unknown error occurred $except";
-      });
-    }
+// class HomePage extends StatefulWidget{
+//   @override
+//   _HomePageState createState() => _HomePageState();
+// }
 
-  }
+// class _HomePageState extends State<HomePage> {
+//   String result = "Hey There";
+//   Future _scanQR() async{
+//     try{
+//       String qrResult = await BarcodeScanner.scan(); //open activity when scan method is called
+//       setState(() {
+//         result = qrResult;
+//       });
+//     }
+//     on PlatformException catch (except){
+//       if(except.code == BarcodeScanner.cameraAccessDenied){
+//         setState(() {
+//           result = "Camera permission was not granted";
+//         });
+//       }else{
+//         setState(() {
+//           result = "Unknown error occurred $except";
+//         });
+//       }
+//     }
+//     on FormatException{
+//       setState(() {
+//         result = "Back button was pressed before scanning was done";
+//       });
+//     }
+//     catch(except){
+//       setState(() {
+//         result = "Unknown error occurred $except";
+//       });
+//     }
 
-  @override 
-  Widget build(BuildContext context){
-    return Scaffold(
-      appBar: AppBar(
-        title: Text("QR Scanner"),
-      ),
-      body: Center(
-        child: Text(
-          result,
-          ),
-      ),
-      floatingActionButton: FloatingActionButton.extended(
-        icon: Icon(Icons.camera_alt),
-        label: Text("Scan"),
-        onPressed: _scanQR,
-      ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-    );
-  }
-}
+//   }
 
-class MyApp extends StatelessWidget {
-  // This widget is the root of your application.
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: MyHomePage(title: 'Flutter Demo Home Page'),
-    );
-  }
-}
+//   @override 
+//   Widget build(BuildContext context){
+//     return Scaffold(
+//       appBar: AppBar(
+//         title: Text("QR Scanner"),
+//       ),
+//       body: Center(
+//         child: Text(
+//           result,
+//           ),
+//       ),
+//       floatingActionButton: FloatingActionButton.extended(
+//         icon: Icon(Icons.camera_alt),
+//         label: Text("Scan"),
+//         onPressed: _scanQR,
+//       ),
+//       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+//     );
+//   }
+// }
 
-class MyHomePage extends StatefulWidget {
-  MyHomePage({Key key, this.title}) : super(key: key);
+// class MyApp extends StatelessWidget {
+//   // This widget is the root of your application.
+//   @override
+//   Widget build(BuildContext context) {
+//     return MaterialApp(
+//       title: 'Flutter Demo',
+//       theme: ThemeData(
+//         primarySwatch: Colors.blue,
+//       ),
+//       home: MyHomePage(title: 'Flutter Demo Home Page'),
+//     );
+//   }
+// }
 
-  final String title;
+// class MyHomePage extends StatefulWidget {
+//   MyHomePage({Key key, this.title}) : super(key: key);
 
-  @override
-  _MyHomePageState createState() => _MyHomePageState();
-}
+//   final String title;
 
-class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
+//   @override
+//   _MyHomePageState createState() => _MyHomePageState();
+// }
 
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
-  }
+// class _MyHomePageState extends State<MyHomePage> {
+//   int _counter = 0;
 
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.title),
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            TextButton(
-              child: Text("Test"),
-              onPressed: () {
-                // Navigator.push(context,
-                //     MaterialPageRoute(builder: (context) => NextPage()));
-                Fluttertoast.showToast(
-                    msg: "This is Center Short Toast",
-                    toastLength: Toast.LENGTH_SHORT,
-                    timeInSecForIosWeb: 1,
-                    backgroundColor: Colors.grey,
-                    textColor: Colors.white,
-                    fontSize: 12.0);
-              },
-            )
-          ],
-        ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: Icon(Icons.add),
-      ),
-    );
-  }
-}
+//   void _incrementCounter() {
+//     setState(() {
+//       _counter++;
+//     });
+//   }
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//       appBar: AppBar(
+//         title: Text(widget.title),
+//       ),
+//       body: Center(
+//         child: Column(
+//           mainAxisAlignment: MainAxisAlignment.center,
+//           children: <Widget>[
+//             TextButton(
+//               child: Text("Test"),
+//               onPressed: () {
+//                 // Navigator.push(context,
+//                 //     MaterialPageRoute(builder: (context) => NextPage()));
+//                 Fluttertoast.showToast(
+//                     msg: "This is Center Short Toast",
+//                     toastLength: Toast.LENGTH_SHORT,
+//                     timeInSecForIosWeb: 1,
+//                     backgroundColor: Colors.grey,
+//                     textColor: Colors.white,
+//                     fontSize: 12.0);
+//               },
+//             )
+//           ],
+//         ),
+//       ),
+//       floatingActionButton: FloatingActionButton(
+//         onPressed: _incrementCounter,
+//         tooltip: 'Increment',
+//         child: Icon(Icons.add),
+//       ),
+//     );
+//   }
+// }
