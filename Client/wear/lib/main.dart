@@ -4,7 +4,8 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:barcode_scan/barcode_scan.dart';
 
 void main() => runApp(MyApp());  
-   
+
+
 class MyApp extends StatelessWidget {  
  @override  
  Widget build(BuildContext context) {  
@@ -31,7 +32,7 @@ class _MyHomePageState extends State<MyHomePage> {
    } catch (e) {  
      if (e.code == BarcodeScanner.CameraAccessDenied) {  
        setState(() {  
-         this.barcode = 'The user did not grant the camera permission!';  
+         this.barcode = 'Camera permission was denied!';  
        });  
      } else {  
        setState(() => this.barcode = 'Unknown error: $e');  
@@ -43,7 +44,7 @@ class _MyHomePageState extends State<MyHomePage> {
  Widget build(BuildContext context) {  
    return Scaffold(  
      appBar: AppBar(  
-       title: Text('Flutter Barcode Scan'),  
+       title: Text('CrowdSafe QRCode Scanner'),  
      ),  
      body: Center(  
        child: Column(  
@@ -53,14 +54,19 @@ class _MyHomePageState extends State<MyHomePage> {
          ],  
        ),  
      ),  
-     floatingActionButton: FloatingActionButton(  
+     floatingActionButton: FloatingActionButton.extended(  
        onPressed: scanCode,  
-       tooltip: 'Scan',  
-       child: Icon(Icons.scanner),  
-     ),  
+       label: Text("Scan"),  
+       icon: Icon(Icons.camera_alt),
+     ), 
+     floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      
    );  
  }  
 }  
+//END OF SCANNER FUNCTION 
+
+
 
 // void main() =>
 //   runApp(MaterialApp(
