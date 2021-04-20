@@ -21,6 +21,13 @@ environment:
   sdk: ">=2.7.0 <3.0.0"
 
 dependencies:
+  cached_network_image: ^3.0.0
+  hexcolor: ^1.0.6
+  dio: ^4.0.0
+  flutter_blurhash: ^0.6.0
+  random_color: ^1.0.5
+  carousel_pro: ^1.0.0
+  google_fonts: ^2.0.0
   fluttertoast: ^7.1.8
   flutter:
     sdk: flutter

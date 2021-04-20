@@ -1,202 +1,81 @@
-import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:barcode_scan/barcode_scan.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:wear/pages/menu.dart';
+import 'package:wear/utils/transition.dart';
 
-void main() => runApp(MyApp());  
+void main() => runApp(MyApp());
 
+class MyApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+      ),
+      home: MyHomePage(),
+    );
+  }
+}
 
-class MyApp extends StatelessWidget {  
- @override  
- Widget build(BuildContext context) {  
-   return MaterialApp(  
-     theme: ThemeData(  
-       primarySwatch: Colors.blue,  
-     ),  
-     home: MyHomePage(),  
-   );  
- }  
-}  
-   
-class MyHomePage extends StatefulWidget {  
- @override  
- _MyHomePageState createState() => _MyHomePageState();  
-}  
-   
-class _MyHomePageState extends State<MyHomePage> {  
- String barcode = "";  
- Future scanCode() async {  
-   try {  
-     String barcode = await BarcodeScanner.scan();  
-     setState(() => this.barcode = barcode);  
-   } catch (e) {  
-     if (e.code == BarcodeScanner.CameraAccessDenied) {  
-       setState(() {  
-         this.barcode = 'Camera permission was denied!';  
-       });  
-     } else {  
-       setState(() => this.barcode = 'Unknown error: $e');  
-     }  
-   }  
- }  
-   
- @override  
- Widget build(BuildContext context) {  
-   return Scaffold(  
-     appBar: AppBar(  
-       title: Text('CrowdSafe QRCode Scanner'),  
-     ),  
-     body: Center(  
-       child: Column(  
-         mainAxisAlignment: MainAxisAlignment.center,  
-         children: <Widget>[  
-           Text(barcode),  
-         ],  
-       ),  
-     ),  
-     floatingActionButton: FloatingActionButton.extended(  
-       onPressed: scanCode,  
-       label: Text("Scan"),  
-       icon: Icon(Icons.camera_alt),
-     ), 
-     floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-      
-   );  
- }  
-}  
-//END OF SCANNER FUNCTION 
+class MyHomePage extends StatefulWidget {
+  @override
+  _MyHomePageState createState() => _MyHomePageState();
+}
 
+class _MyHomePageState extends State<MyHomePage> {
+  String barcode = "";
+  Future scanCode() async {
+    try {
+      String barcode = await BarcodeScanner.scan();
+      setState(() => this.barcode = barcode);
+    } catch (e) {
+      if (e.code == BarcodeScanner.CameraAccessDenied) {
+        setState(() {
+          this.barcode = 'Camera permission was denied!';
+        });
+      } else {
+        setState(() => this.barcode = 'Unknown error: $e');
+      }
+    }
+  }
 
-
-// void main() =>
-//   runApp(MaterialApp(
-//     debugShowCheckedModeBanner: false,
-//     home: MyHomePage(),
-//   ));
-
-// class HomePage extends StatefulWidget{
-//   @override
-//   _HomePageState createState() => _HomePageState();
-// }
-
-// class _HomePageState extends State<HomePage> {
-//   String result = "Hey There";
-//   Future _scanQR() async{
-//     try{
-//       String qrResult = await BarcodeScanner.scan(); //open activity when scan method is called
-//       setState(() {
-//         result = qrResult;
-//       });
-//     }
-//     on PlatformException catch (except){
-//       if(except.code == BarcodeScanner.cameraAccessDenied){
-//         setState(() {
-//           result = "Camera permission was not granted";
-//         });
-//       }else{
-//         setState(() {
-//           result = "Unknown error occurred $except";
-//         });
-//       }
-//     }
-//     on FormatException{
-//       setState(() {
-//         result = "Back button was pressed before scanning was done";
-//       });
-//     }
-//     catch(except){
-//       setState(() {
-//         result = "Unknown error occurred $except";
-//       });
-//     }
-
-//   }
-
-//   @override 
-//   Widget build(BuildContext context){
-//     return Scaffold(
-//       appBar: AppBar(
-//         title: Text("QR Scanner"),
-//       ),
-//       body: Center(
-//         child: Text(
-//           result,
-//           ),
-//       ),
-//       floatingActionButton: FloatingActionButton.extended(
-//         icon: Icon(Icons.camera_alt),
-//         label: Text("Scan"),
-//         onPressed: _scanQR,
-//       ),
-//       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-//     );
-//   }
-// }
-
-// class MyApp extends StatelessWidget {
-//   // This widget is the root of your application.
-//   @override
-//   Widget build(BuildContext context) {
-//     return MaterialApp(
-//       title: 'Flutter Demo',
-//       theme: ThemeData(
-//         primarySwatch: Colors.blue,
-//       ),
-//       home: MyHomePage(title: 'Flutter Demo Home Page'),
-//     );
-//   }
-// }
-
-// class MyHomePage extends StatefulWidget {
-//   MyHomePage({Key key, this.title}) : super(key: key);
-
-//   final String title;
-
-//   @override
-//   _MyHomePageState createState() => _MyHomePageState();
-// }
-
-// class _MyHomePageState extends State<MyHomePage> {
-//   int _counter = 0;
-
-//   void _incrementCounter() {
-//     setState(() {
-//       _counter++;
-//     });
-//   }
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       appBar: AppBar(
-//         title: Text(widget.title),
-//       ),
-//       body: Center(
-//         child: Column(
-//           mainAxisAlignment: MainAxisAlignment.center,
-//           children: <Widget>[
-//             TextButton(
-//               child: Text("Test"),
-//               onPressed: () {
-//                 // Navigator.push(context,
-//                 //     MaterialPageRoute(builder: (context) => NextPage()));
-//                 Fluttertoast.showToast(
-//                     msg: "This is Center Short Toast",
-//                     toastLength: Toast.LENGTH_SHORT,
-//                     timeInSecForIosWeb: 1,
-//                     backgroundColor: Colors.grey,
-//                     textColor: Colors.white,
-//                     fontSize: 12.0);
-//               },
-//             )
-//           ],
-//         ),
-//       ),
-//       floatingActionButton: FloatingActionButton(
-//         onPressed: _incrementCounter,
-//         tooltip: 'Increment',
-//         child: Icon(Icons.add),
-//       ),
-//     );
-//   }
-// }
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: CupertinoNavigationBar(
+        leading: Material(
+          child: IconButton(
+            icon: Icon(Icons.menu),
+            onPressed: () {
+              Navigator.push(context, createRoute(MenuPage()));
+            },
+          ),
+        ),
+        middle: Text('Dashboard'),
+        border: null,
+      ),
+      body: CustomScrollView(
+        slivers: [
+          SliverList(
+            delegate: SliverChildBuilderDelegate((context, index) {
+              return Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Container(
+                  height: 200,
+                  color: Colors.grey,
+                ),
+              );
+            }, childCount: 5),
+          )
+        ],
+      ),
+      // floatingActionButton: FloatingActionButton.extended(
+      //   onPressed: scanCode,
+      //   label: Text("Scan"),
+      //   icon: Icon(Icons.camera_alt),
+      // ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+    );
+  }
+}
