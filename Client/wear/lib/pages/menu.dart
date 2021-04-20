@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
+import 'package:wear/pages/map.dart';
+import 'package:wear/pages/scanner.dart';
 import 'package:wear/pages/statistics.dart';
 import 'package:wear/utils/transition.dart';
 
@@ -60,6 +62,11 @@ class _MenuPageState extends State<MenuPage> {
                 style: TextStyle(
                     fontSize: 14, color: color2, fontWeight: FontWeight.w600),
               ),
+              onPressed: () {
+                Navigator.pop(context);
+                Navigator.push(context,
+                    CupertinoPageRoute(builder: (context) => MapScreen()));
+              },
             ),
             FlatButton(
               child: Text(
@@ -67,6 +74,11 @@ class _MenuPageState extends State<MenuPage> {
                 style: TextStyle(
                     fontSize: 14, color: color, fontWeight: FontWeight.w600),
               ),
+              onPressed: () {
+                Navigator.pop(context);
+                Navigator.push(context,
+                    CupertinoPageRoute(builder: (context) => ScannerPage()));
+              },
             ),
             FlatButton(
               child: Text(
