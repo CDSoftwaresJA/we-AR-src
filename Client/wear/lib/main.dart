@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:wear/pages/menu.dart';
 import 'package:wear/utils/transition.dart';
+import 'package:wear/widget/row.dart';
 
 void main() => runApp(MyApp());
 
@@ -58,16 +59,19 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
       body: CustomScrollView(
         slivers: [
-          SliverList(
-            delegate: SliverChildBuilderDelegate((context, index) {
-              return Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Container(
-                  height: 200,
-                  color: Colors.grey,
-                ),
-              );
-            }, childCount: 5),
+          SliverPadding(
+            padding: const EdgeInsets.only(left: 20, right: 20),
+            sliver: SliverList(
+              delegate: SliverChildBuilderDelegate((context, index) {
+                return LocationRow(
+                  description1: "Description 1",
+                  description2: "Description 2",
+                  name: "Name of Location",
+                  count: 5,
+                  onTap: () {},
+                );
+              }, childCount: 5),
+            ),
           )
         ],
       ),
