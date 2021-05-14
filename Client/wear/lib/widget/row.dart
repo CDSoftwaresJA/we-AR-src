@@ -61,7 +61,7 @@ class LocationRow extends StatelessWidget {
                         child: Container(
                           height: 20,
                           width: 120,
-                          color: AppColors.success,
+                          color: AppColors.error,
                           child: Center(
                               child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,

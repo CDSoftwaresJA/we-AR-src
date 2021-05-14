@@ -2,20 +2,16 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:wear/pages/loading.dart';
 import 'package:wear/pages/place_page.dart';
-import 'package:wear/pages/recently_visited.dart';
 import 'package:wear/utils/api.dart';
 import 'package:wear/utils/colors.dart';
-import 'package:wear/utils/transition.dart';
 import 'package:wear/widget/row.dart';
 
-import 'menu.dart';
-
-class MyHomePage extends StatefulWidget {
+class RecentlyVisited extends StatefulWidget {
   @override
-  _MyHomePageState createState() => _MyHomePageState();
+  _RecentlyVisitedState createState() => _RecentlyVisitedState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
+class _RecentlyVisitedState extends State<RecentlyVisited> {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder<Map<String, dynamic>>(
@@ -37,33 +33,11 @@ class _MyHomePageState extends State<MyHomePage> {
     var arr = locations["locations"];
     return Scaffold(
       appBar: CupertinoNavigationBar(
-        leading: Material(
-          child: IconButton(
-            icon: Icon(Icons.menu),
-            onPressed: () {
-              Navigator.push(context, createRoute(MenuPage()));
-            },
-          ),
-        ),
-        trailing: Material(
-          child: IconButton(
-            icon: Icon(Icons.search),
-            onPressed: () {},
-          ),
-        ),
-        middle: Text('Dashboard'),
+        middle: Text('Recently Visited'),
         border: null,
       ),
       body: CustomScrollView(
         slivers: [
-          SliverList(
-            delegate: SliverChildListDelegate.fixed([
-              recentlyVisited(() {
-                Navigator.of(context).push(CupertinoPageRoute(
-                    builder: (context) => RecentlyVisited()));
-              }),
-            ]),
-          ),
           SliverPadding(
             padding: const EdgeInsets.only(left: 20, right: 20),
             sliver: SliverList(
@@ -94,34 +68,31 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
-  recentlyVisited(VoidCallback onTap) {
+  recentlyVisited(bool completed) {
     return Padding(
       padding: const EdgeInsets.all(8.0),
-      child: InkWell(
-        onTap: onTap,
-        child: ClipRRect(
-          borderRadius: BorderRadius.all(Radius.circular(10)),
-          child: Container(
-            height: 50,
-            color: AppColors.error,
-            child: Center(
-                child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Icon(
-                  Icons.place,
-                  color: Colors.white,
-                ),
-                Text(
-                  "Recently Visited",
-                  style: TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.w600,
-                      fontSize: 14),
-                ),
-              ],
-            )),
-          ),
+      child: ClipRRect(
+        borderRadius: BorderRadius.all(Radius.circular(10)),
+        child: Container(
+          height: 50,
+          color: AppColors.error,
+          child: Center(
+              child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Icon(
+                Icons.place,
+                color: Colors.white,
+              ),
+              Text(
+                "Recently Visited",
+                style: TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.w600,
+                    fontSize: 14),
+              ),
+            ],
+          )),
         ),
       ),
     );

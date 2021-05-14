@@ -169,7 +169,7 @@ packages:
       name: google_maps_flutter
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.0.3"
+    version: "2.0.4"
   google_maps_flutter_platform_interface:
     dependency: transitive
     description:
@@ -212,20 +212,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.6.3"
-  latlng:
-    dependency: transitive
-    description:
-      name: latlng
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.1.0"
-  map:
-    dependency: "direct main"
-    description:
-      name: map
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.3.0"
   matcher:
     dependency: transitive
     description:

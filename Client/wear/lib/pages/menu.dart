@@ -4,6 +4,7 @@ import 'package:hexcolor/hexcolor.dart';
 import 'package:wear/pages/map.dart';
 import 'package:wear/pages/scanner.dart';
 import 'package:wear/pages/statistics.dart';
+import 'package:wear/utils/colors.dart';
 import 'package:wear/utils/transition.dart';
 
 class MenuPage extends StatefulWidget {
@@ -39,13 +40,6 @@ class _MenuPageState extends State<MenuPage> {
           children: [
             FlatButton(
               child: Text(
-                "My Profile",
-                style: TextStyle(
-                    fontSize: 14, color: color2, fontWeight: FontWeight.w600),
-              ),
-            ),
-            FlatButton(
-              child: Text(
                 "Statistics",
                 style: TextStyle(
                     fontSize: 14, color: color, fontWeight: FontWeight.w600),
@@ -58,9 +52,11 @@ class _MenuPageState extends State<MenuPage> {
             ),
             FlatButton(
               child: Text(
-                "Map",
+                "Map View",
                 style: TextStyle(
-                    fontSize: 14, color: color2, fontWeight: FontWeight.w600),
+                    fontSize: 14,
+                    color: AppColors.color,
+                    fontWeight: FontWeight.w600),
               ),
               onPressed: () {
                 Navigator.pop(context);
@@ -80,17 +76,6 @@ class _MenuPageState extends State<MenuPage> {
                     CupertinoPageRoute(builder: (context) => ScannerPage()));
               },
             ),
-            FlatButton(
-              child: Text(
-                "Log out",
-                style: TextStyle(
-                    fontSize: 14, color: color2, fontWeight: FontWeight.w600),
-              ),
-              onPressed: () {
-                Navigator.pop(context);
-                // Navigator.pushReplacement(context, createRoute(LoginPage()));
-              },
-            )
           ],
         ),
       ),
