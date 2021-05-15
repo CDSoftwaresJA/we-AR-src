@@ -38,7 +38,7 @@ class _MapScreenState extends State<MapScreen> {
         infoWindow: InfoWindow(
             title: location["location_name"],
             snippet:
-                'Live Count: ${location["live_count"]} \nTime Recommendation: '),
+                'Live Count: ${location["live_count"]} \nTime Recommendation: ${location["best_hours"]} '),
       );
       markers.add(marker);
     }
