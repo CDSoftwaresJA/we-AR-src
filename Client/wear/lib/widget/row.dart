@@ -7,7 +7,7 @@ import 'package:flutter_blurhash/flutter_blurhash.dart';
 import 'package:wear/utils/colors.dart';
 
 class LocationRow extends StatelessWidget {
-  final String name, description1, description2;
+  final String name, description1, description2, photo;
   final int count;
   final VoidCallback onTap;
   LocationRow(
@@ -15,13 +15,15 @@ class LocationRow extends StatelessWidget {
       this.description1,
       this.description2,
       this.onTap,
-      this.count});
+      this.count,
+      this.photo});
 
   @override
   Widget build(BuildContext context) {
     var rng = new Random();
-    String url =
-        "https://source.unsplash.com/20${rng.nextInt(9)}x20${rng.nextInt(9)}/?cardio";
+    String url = photo == null
+        ? "https://source.unsplash.com/20${rng.nextInt(9)}x20${rng.nextInt(9)}/?cardio"
+        : photo;
 
     return InkWell(
       child: Padding(
@@ -84,12 +86,15 @@ class LocationRow extends StatelessWidget {
                     ),
                   ],
                 ),
-                Text(
-                  this.description1,
-                  style: TextStyle(
-                    fontSize: 12,
-                    fontWeight: FontWeight.w600,
-                    color: AppColors.color2,
+                Container(
+                  width: MediaQuery.of(context).size.width * 0.5,
+                  child: Text(
+                    this.description1,
+                    style: TextStyle(
+                      fontSize: 12,
+                      fontWeight: FontWeight.w600,
+                      color: AppColors.color2,
+                    ),
                   ),
                 ),
                 SizedBox(

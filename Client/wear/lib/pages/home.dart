@@ -68,11 +68,16 @@ class _MyHomePageState extends State<MyHomePage> {
             padding: const EdgeInsets.only(left: 20, right: 20),
             sliver: SliverList(
               delegate: SliverChildBuilderDelegate((context, index) {
+                print(API.parsePhotoString(
+                    arr[index]["result"]["photos"][0]["photo_reference"]));
                 return LocationRow(
-                  description1: "Description 1",
-                  description2: "Description 2",
+                  description1: "${arr[index]["result"]["formatted_address"]}",
+                  description2:
+                      "${arr[index]["result"]["formatted_phone_number"]}",
                   name: arr[index]["location_name"],
                   count: arr[index]["live_count"],
+                  photo: API.parsePhotoString(
+                      arr[index]["result"]["photos"][0]["photo_reference"]),
                   onTap: () {
                     Navigator.of(context).push(CupertinoPageRoute(
                         builder: (context) => PlacePage(

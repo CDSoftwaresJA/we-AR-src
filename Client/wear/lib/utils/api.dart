@@ -58,10 +58,16 @@ class API {
       };
       var response = await dio.get(
           "https://maps.googleapis.com/maps/api/place/details/json?place_id=$id&key=AIzaSyBze4nJ7h4cyvaKbRpO1JbtyFJHXGDYrLU");
+      print(
+          "https://maps.googleapis.com/maps/api/place/details/json?place_id=$id&key=AIzaSyBze4nJ7h4cyvaKbRpO1JbtyFJHXGDYrLU");
       return response.data;
     } catch (e) {
       print(e);
     }
+  }
+
+  static String parsePhotoString(String photoReference) {
+    return "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=$photoReference&key=AIzaSyBze4nJ7h4cyvaKbRpO1JbtyFJHXGDYrLU";
   }
 
   static Future<Map<String, dynamic>> getTimeReccomendation(
