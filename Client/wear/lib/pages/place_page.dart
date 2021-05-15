@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:wear/pages/loading.dart';
@@ -41,7 +43,7 @@ class _PlacePageState extends State<PlacePage> {
             padding: const EdgeInsets.only(left: 10, right: 10, top: 10),
             sliver: SliverList(
               delegate: SliverChildListDelegate.fixed([
-                Text("${widget.location}")
+                Text("${getPrettyJSONString(widget.location)}")
                 // Get Directions
               ]),
             ),
@@ -53,7 +55,11 @@ class _PlacePageState extends State<PlacePage> {
       //   label: Text("Scan"),
       //   icon: Icon(Icons.camera_alt),
       // ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
     );
+  }
+
+  String getPrettyJSONString(jsonObject) {
+    var encoder = new JsonEncoder.withIndent("     ");
+    return encoder.convert(jsonObject);
   }
 }
