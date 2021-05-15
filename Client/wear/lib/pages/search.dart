@@ -1,26 +1,21 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:wear/pages/loading.dart';
 import 'package:wear/pages/place_page.dart';
-import 'package:wear/pages/recently_visited.dart';
-import 'package:wear/pages/search.dart';
 import 'package:wear/utils/api.dart';
-import 'package:wear/utils/colors.dart';
-import 'package:wear/utils/transition.dart';
 import 'package:wear/widget/row.dart';
 
-import 'menu.dart';
+import 'loading.dart';
 
-class MyHomePage extends StatefulWidget {
+class SearchPage extends StatefulWidget {
   @override
-  _MyHomePageState createState() => _MyHomePageState();
+  _SearchPageState createState() => _SearchPageState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
+class _SearchPageState extends State<SearchPage> {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder<Map<String, dynamic>>(
-        future: API.getLocations(),
+        future: API.searchLocation("S"),
         builder: (context, snapshot) {
           Widget child = LoadingPage();
           if (snapshot.hasData) {
@@ -38,36 +33,11 @@ class _MyHomePageState extends State<MyHomePage> {
     var arr = locations["locations"];
     return Scaffold(
       appBar: CupertinoNavigationBar(
-        leading: Material(
-          child: IconButton(
-            icon: Icon(Icons.menu),
-            onPressed: () {
-              Navigator.push(context, createRoute(MenuPage()));
-            },
-          ),
-        ),
-        trailing: Material(
-          child: IconButton(
-            icon: Icon(Icons.search),
-            onPressed: () {
-              Navigator.of(context)
-                  .push(CupertinoPageRoute(builder: (context) => SearchPage()));
-            },
-          ),
-        ),
-        middle: Text('Dashboard'),
+        middle: Text('Search'),
         border: null,
       ),
       body: CustomScrollView(
         slivers: [
-          SliverList(
-            delegate: SliverChildListDelegate.fixed([
-              recentlyVisited(() {
-                Navigator.of(context).push(CupertinoPageRoute(
-                    builder: (context) => RecentlyVisited()));
-              }),
-            ]),
-          ),
           SliverPadding(
             padding: const EdgeInsets.only(left: 20, right: 20),
             sliver: SliverList(
@@ -100,39 +70,6 @@ class _MyHomePageState extends State<MyHomePage> {
       //   icon: Icon(Icons.camera_alt),
       // ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-    );
-  }
-
-  recentlyVisited(VoidCallback onTap) {
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: InkWell(
-        onTap: onTap,
-        child: ClipRRect(
-          borderRadius: BorderRadius.all(Radius.circular(10)),
-          child: Container(
-            height: 50,
-            color: AppColors.error,
-            child: Center(
-                child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Icon(
-                  Icons.place,
-                  color: Colors.white,
-                ),
-                Text(
-                  "Recently Visited",
-                  style: TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.w600,
-                      fontSize: 14),
-                ),
-              ],
-            )),
-          ),
-        ),
-      ),
     );
   }
 }
