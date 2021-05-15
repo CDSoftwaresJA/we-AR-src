@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:wear/pages/place_page.dart';
 import 'package:wear/utils/api.dart';
 
 import 'loading.dart';
@@ -38,7 +39,13 @@ class _MapScreenState extends State<MapScreen> {
         infoWindow: InfoWindow(
             title: location["location_name"],
             snippet:
-                'Live Count: ${location["live_count"]} \nTime Recommendation: ${location["best_hours"]} '),
+                'Live Count: ${location["live_count"]} \nTime Recommendation: ${location["best_hours"]} ',
+            onTap: () {
+              Navigator.of(context).push(CupertinoPageRoute(
+                  builder: (context) => PlacePage(
+                        location: location,
+                      )));
+            }),
       );
       markers.add(marker);
     }
