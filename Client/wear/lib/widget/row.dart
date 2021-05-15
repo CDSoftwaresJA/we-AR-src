@@ -45,12 +45,16 @@ class LocationRow extends StatelessWidget {
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
-                  this.name,
-                  style: TextStyle(
-                      fontSize: 14,
-                      color: AppColors.color,
-                      fontWeight: FontWeight.w800),
+                Container(
+                  width: MediaQuery.of(context).size.width * 0.5,
+                  child: Text(
+                    this.name,
+                    overflow: TextOverflow.ellipsis,
+                    style: TextStyle(
+                        fontSize: 12,
+                        color: AppColors.color,
+                        fontWeight: FontWeight.w800),
+                  ),
                 ),
                 Row(
                   children: [
