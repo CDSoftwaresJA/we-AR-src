@@ -49,7 +49,7 @@ class _SearchPageState extends State<SearchPage> {
                   description2:
                       "${arr[index]["result"]["formatted_phone_number"]}",
                   name: arr[index]["location_name"],
-                  count: arr[index]["live_count"],
+                  count: arr[index]["crowd_estimation"],
                   photo: API.parsePhotoString(
                       arr[index]["result"]["photos"][0]["photo_reference"]),
                   onTap: () {

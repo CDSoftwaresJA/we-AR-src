@@ -2,7 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:wear/pages/loading.dart';
 import 'package:wear/pages/place_page.dart';
-import 'package:wear/pages/recently_visited.dart';
 import 'package:wear/pages/search.dart';
 import 'package:wear/utils/api.dart';
 import 'package:wear/utils/colors.dart';
@@ -60,20 +59,10 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
       body: CustomScrollView(
         slivers: [
-          SliverList(
-            delegate: SliverChildListDelegate.fixed([
-              recentlyVisited(() {
-                Navigator.of(context).push(CupertinoPageRoute(
-                    builder: (context) => RecentlyVisited()));
-              }),
-            ]),
-          ),
           SliverPadding(
             padding: const EdgeInsets.only(left: 20, right: 20),
             sliver: SliverList(
               delegate: SliverChildBuilderDelegate((context, index) {
-                print(API.parsePhotoString(
-                    arr[index]["result"]["photos"][0]["photo_reference"]));
                 return LocationRow(
                   description1: "${arr[index]["result"]["formatted_address"]}",
                   description2:

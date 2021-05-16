@@ -40,6 +40,7 @@ class LocationRow extends StatelessWidget {
                       BlurHash(hash: "L3G[ZwkC00V@00WB00of00ofLzWB"),
                   errorWidget: (context, url, error) => Icon(Icons.error),
                   height: 86,
+                  fit: BoxFit.cover,
                   width: 86,
                 ),
               ),

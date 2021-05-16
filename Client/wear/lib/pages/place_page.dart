@@ -1,9 +1,12 @@
 import 'dart:convert';
 
+import 'package:carousel_pro/carousel_pro.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:wear/pages/loading.dart';
+import 'package:map_launcher/map_launcher.dart';
 import 'package:wear/utils/api.dart';
+import 'package:wear/utils/colors.dart';
+import 'package:wear/widget/iconbutton.dart';
 
 class PlacePage extends StatefulWidget {
   Map<String, dynamic> location;
@@ -15,23 +18,18 @@ class PlacePage extends StatefulWidget {
 class _PlacePageState extends State<PlacePage> {
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder<Map<String, dynamic>>(
-        future: API.getLocations(),
-        builder: (context, snapshot) {
-          Widget child = LoadingPage();
-          if (snapshot.hasData) {
-            print(snapshot.data["locations"]);
-            child = getUI(snapshot.data);
-          }
-          return AnimatedSwitcher(
-            duration: Duration(seconds: 1),
-            child: child,
-          );
-        });
+    return getUI();
   }
 
-  getUI(Map<String, dynamic> locations) {
-    var arr = locations["locations"];
+  getUI() {
+    List<dynamic> photos = widget.location["result"]["photos"];
+    List<Image> images = [];
+    for (dynamic photo in photos) {
+      images.add(Image.network(
+        API.parsePhotoString(photo["photo_reference"]),
+        fit: BoxFit.cover,
+      ));
+    }
     return Scaffold(
       appBar: CupertinoNavigationBar(
         middle: Text(widget.location["location_name"]),
@@ -43,7 +41,65 @@ class _PlacePageState extends State<PlacePage> {
             padding: const EdgeInsets.only(left: 10, right: 10, top: 10),
             sliver: SliverList(
               delegate: SliverChildListDelegate.fixed([
-                Text("${getPrettyJSONString(widget.location)}")
+                SizedBox(
+                    height: 300.0,
+                    child: Carousel(
+                      images: images,
+                      showIndicator: false,
+                      indicatorBgPadding: 2,
+                      borderRadius: false,
+                      moveIndicatorFromBottom: 180.0,
+                      noRadiusForIndicator: true,
+                      overlayShadow: true,
+                      overlayShadowColors: Colors.grey[50],
+                      overlayShadowSize: 0.5,
+                    )),
+                SizedBox(
+                  height: 20,
+                ),
+                Row(
+                  children: [
+                    IconButtonWidget(
+                      buttonText: "Get Directions",
+                      icon: Icons.gps_fixed,
+                      buttonColor: AppColors.error,
+                      onPressed: () async {
+                        final availableMaps = await MapLauncher.installedMaps;
+                        print(
+                            availableMaps); // [AvailableMap { mapName: Google Maps, mapType: google }, ...]
+
+                        await availableMaps.first.showMarker(
+                          coords: Coords(widget.location["latitude"],
+                              widget.location["longitude"]),
+                          title: widget.location["location_name"],
+                        );
+                      },
+                    ),
+                  ],
+                ),
+                getRow(
+                    title: "Estimated Crowd",
+                    subtitle: "[Values for Estimated Crowd Here]",
+                    iconData: Icons.person),
+                getRow(
+                    title: "Address",
+                    subtitle: "${widget.location["address"]}",
+                    iconData: Icons.location_pin),
+                getRow(
+                    title: "Phone Number",
+                    subtitle:
+                        "${widget.location["result"]["formatted_phone_number"]}",
+                    iconData: Icons.phone),
+
+                getRow(
+                    title: "Safe to Visit",
+                    subtitle: "${widget.location["safe_to_visit"]}",
+                    iconData: Icons.favorite),
+                getRow(
+                    title: "Best Hours",
+                    subtitle: "${widget.location["best_hours"]}",
+                    iconData: Icons.timelapse),
+                // Text("${getPrettyJSONString(widget.location)}")
                 // Get Directions
               ]),
             ),
@@ -61,5 +117,28 @@ class _PlacePageState extends State<PlacePage> {
   String getPrettyJSONString(jsonObject) {
     var encoder = new JsonEncoder.withIndent("     ");
     return encoder.convert(jsonObject);
+  }
+
+  getRow({String title, String subtitle, IconData iconData}) {
+    return ListTile(
+      title: Text(
+        title,
+        overflow: TextOverflow.ellipsis,
+        style: TextStyle(
+            fontSize: 16, color: AppColors.error, fontWeight: FontWeight.w800),
+      ),
+      subtitle: Text(
+        subtitle,
+        style: TextStyle(
+          fontSize: 12,
+          color: AppColors.color,
+        ),
+        maxLines: 4,
+      ),
+      trailing: Icon(
+        iconData,
+        color: AppColors.error,
+      ),
+    );
   }
 }

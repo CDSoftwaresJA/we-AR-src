@@ -18,6 +18,7 @@ class API {
 
       var response = await dio.get(endpoint + "locations");
       List<dynamic> locations = response.data["locations"];
+
       for (dynamic location in locations) {
         location.addAll(await getTimeReccomendation(location["location_id"]));
         location
@@ -27,7 +28,7 @@ class API {
       map["locations"] = locations;
       return map;
     } catch (e) {
-      print(e);
+      print("getLocations $e");
     }
   }
 
@@ -49,6 +50,7 @@ class API {
             .addAll(await getGooglePlacesDetails(location["google_place_id"]));
       }
       Map<String, dynamic> map = response.data;
+      print("Location: " + locations[0]["crowd_estimation"]);
       map["locations"] = locations;
       return map;
     } catch (e) {
@@ -83,8 +85,6 @@ class API {
       };
       var response = await dio.get(
           "https://maps.googleapis.com/maps/api/place/details/json?place_id=$id&key=AIzaSyBze4nJ7h4cyvaKbRpO1JbtyFJHXGDYrLU");
-      print(
-          "https://maps.googleapis.com/maps/api/place/details/json?place_id=$id&key=AIzaSyBze4nJ7h4cyvaKbRpO1JbtyFJHXGDYrLU");
       return response.data;
     } catch (e) {
       print(e);
@@ -109,6 +109,7 @@ class API {
       return response.data;
     } catch (e) {
       print(e);
+      return {};
     }
   }
 }

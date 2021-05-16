@@ -46,7 +46,7 @@ class _RecentlyVisitedState extends State<RecentlyVisited> {
                   description1: "Description 1",
                   description2: "Description 2",
                   name: arr[index]["location_name"],
-                  count: arr[index]["live_count"],
+                  count: arr[index]["crowd_estimation"],
                   onTap: () {
                     Navigator.of(context).push(CupertinoPageRoute(
                         builder: (context) => PlacePage(
