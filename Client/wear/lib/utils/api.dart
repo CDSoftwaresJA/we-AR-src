@@ -50,7 +50,7 @@ class API {
             .addAll(await getGooglePlacesDetails(location["google_place_id"]));
       }
       Map<String, dynamic> map = response.data;
-      print("Location: " + locations[0]["crowd_estimation"]);
+      // print("Location: " + locations[0]["crowd_estimation"]);
       map["locations"] = locations;
       return map;
     } catch (e) {

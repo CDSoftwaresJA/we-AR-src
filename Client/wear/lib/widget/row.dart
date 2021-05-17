@@ -55,7 +55,7 @@ class LocationRow extends StatelessWidget {
                     overflow: TextOverflow.ellipsis,
                     style: TextStyle(
                         fontSize: 12,
-                        color: AppColors.color,
+                        color: AppColors.accent,
                         fontWeight: FontWeight.w800),
                   ),
                 ),
@@ -94,7 +94,7 @@ class LocationRow extends StatelessWidget {
                     style: TextStyle(
                       fontSize: 12,
                       fontWeight: FontWeight.w600,
-                      color: AppColors.color2,
+                      color: AppColors.black,
                     ),
                   ),
                 ),
@@ -105,7 +105,7 @@ class LocationRow extends StatelessWidget {
                   this.description2,
                   style: TextStyle(
                     fontSize: 12,
-                    color: AppColors.color,
+                    color: AppColors.grey,
                   ),
                   maxLines: 4,
                 ),

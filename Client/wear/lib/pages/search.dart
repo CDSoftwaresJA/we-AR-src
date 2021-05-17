@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:wear/pages/place_page.dart';
 import 'package:wear/utils/api.dart';
 import 'package:wear/widget/row.dart';
@@ -12,14 +13,15 @@ class SearchPage extends StatefulWidget {
 }
 
 class _SearchPageState extends State<SearchPage> {
+  String query = " ";
   @override
   Widget build(BuildContext context) {
     return FutureBuilder<Map<String, dynamic>>(
-        future: API.searchLocation("S"),
+        future: API.searchLocation(query),
         builder: (context, snapshot) {
           Widget child = LoadingPage();
           if (snapshot.hasData) {
-            print(snapshot.data["locations"]);
+            // print(snapshot.data["locations"]);
             child = getUI(snapshot.data);
           }
           return AnimatedSwitcher(
@@ -38,18 +40,25 @@ class _SearchPageState extends State<SearchPage> {
       ),
       body: CustomScrollView(
         slivers: [
+          SliverList(
+              delegate: SliverChildListDelegate.fixed([
+            TextField(
+              onChanged: (String value) {
+                print(value);
+                query = value;
+              },
+            )
+          ])),
           SliverPadding(
             padding: const EdgeInsets.only(left: 20, right: 20),
             sliver: SliverList(
               delegate: SliverChildBuilderDelegate((context, index) {
-                print(API.parsePhotoString(
-                    arr[index]["result"]["photos"][0]["photo_reference"]));
                 return LocationRow(
                   description1: "${arr[index]["result"]["formatted_address"]}",
                   description2:
                       "${arr[index]["result"]["formatted_phone_number"]}",
                   name: arr[index]["location_name"],
-                  count: arr[index]["crowd_estimation"],
+                  count: arr[index]["live_count"],
                   photo: API.parsePhotoString(
                       arr[index]["result"]["photos"][0]["photo_reference"]),
                   onTap: () {
@@ -69,7 +78,6 @@ class _SearchPageState extends State<SearchPage> {
       //   label: Text("Scan"),
       //   icon: Icon(Icons.camera_alt),
       // ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
     );
   }
 }

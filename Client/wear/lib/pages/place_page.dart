@@ -57,25 +57,46 @@ class _PlacePageState extends State<PlacePage> {
                 SizedBox(
                   height: 20,
                 ),
-                Row(
-                  children: [
-                    IconButtonWidget(
-                      buttonText: "Get Directions",
-                      icon: Icons.gps_fixed,
-                      buttonColor: AppColors.error,
-                      onPressed: () async {
-                        final availableMaps = await MapLauncher.installedMaps;
-                        print(
-                            availableMaps); // [AvailableMap { mapName: Google Maps, mapType: google }, ...]
+                Container(
+                  child: Row(
+                    children: [
+                      IconButtonWidget(
+                        buttonText: "Get Directions",
+                        icon: Icons.gps_fixed,
+                        buttonColor: AppColors.error,
+                        onPressed: () async {
+                          final availableMaps = await MapLauncher.installedMaps;
+                          print(
+                              availableMaps); // [AvailableMap { mapName: Google Maps, mapType: google }, ...]
 
-                        await availableMaps.first.showMarker(
-                          coords: Coords(widget.location["latitude"],
-                              widget.location["longitude"]),
-                          title: widget.location["location_name"],
-                        );
-                      },
-                    ),
-                  ],
+                          await availableMaps.first.showMarker(
+                            coords: Coords(widget.location["latitude"],
+                                widget.location["longitude"]),
+                            title: widget.location["location_name"],
+                          );
+                        },
+                      ),
+                      SizedBox(
+                        width: 6,
+                      ),
+                      IconButtonWidget(
+                        buttonText: "Map View",
+                        icon: Icons.gps_fixed,
+                        buttonColor: AppColors.error,
+                        onPressed: () async {
+                          final availableMaps = await MapLauncher.installedMaps;
+                          print(
+                              availableMaps); // [AvailableMap { mapName: Google Maps, mapType: google }, ...]
+
+                          await availableMaps.first.showMarker(
+                            coords: Coords(widget.location["latitude"],
+                                widget.location["longitude"]),
+                            title: widget.location["location_name"],
+                          );
+                        },
+                      ),
+                    ],
+                  ),
                 ),
                 getRow(
                     title: "Estimated Crowd",
@@ -131,13 +152,13 @@ class _PlacePageState extends State<PlacePage> {
         subtitle,
         style: TextStyle(
           fontSize: 12,
-          color: AppColors.color,
+          color: AppColors.black,
         ),
         maxLines: 4,
       ),
       trailing: Icon(
         iconData,
-        color: AppColors.error,
+        color: AppColors.grey,
       ),
     );
   }
