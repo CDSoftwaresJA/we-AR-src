@@ -9,11 +9,13 @@ import 'package:wear/utils/colors.dart';
 class LocationRow extends StatelessWidget {
   final String name, description1, description2, photo;
   final int count;
+  final bool safe;
   final VoidCallback onTap;
   LocationRow(
       {this.name,
       this.description1,
       this.description2,
+      this.safe,
       this.onTap,
       this.count,
       this.photo});
@@ -75,6 +77,32 @@ class LocationRow extends StatelessWidget {
                             children: [
                               Text(
                                 "Live Count : $count",
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.w500,
+                                    fontSize: 12),
+                              )
+                            ],
+                          )),
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding:
+                          const EdgeInsets.only(left: 5, bottom: 5, top: 5),
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.all(Radius.circular(5)),
+                        child: Container(
+                          height: 20,
+                          width: 120,
+                          color:
+                              safe == true ? AppColors.success : Colors.amber,
+                          child: Center(
+                              child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                safe == true ? "Safe" : "Crowded",
                                 style: TextStyle(
                                     color: Colors.white,
                                     fontWeight: FontWeight.w500,

@@ -2,6 +2,7 @@ import 'package:barcode_scan/barcode_scan.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'package:wear/pages/map.dart';
 import 'package:wear/pages/statistics.dart';
 import 'package:wear/utils/colors.dart';
@@ -72,11 +73,21 @@ class _MenuPageState extends State<MenuPage> {
               ),
               onPressed: () async {
                 var result = await BarcodeScanner.scan();
+                print(result.rawContent);
+                launchURL(result.rawContent);
               },
             ),
           ],
         ),
       ),
     );
+  }
+
+  launchURL(String url) async {
+    if (await canLaunch(url)) {
+      await launch(url, forceSafariVC: true, forceWebView: true);
+    } else {
+      throw 'Could not launch $url';
+    }
   }
 }

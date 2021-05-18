@@ -31,15 +31,25 @@ class _MapScreenState extends State<MapScreen> {
 
   getUI(Map<String, dynamic> locationSnapshot) {
     var locations = locationSnapshot["locations"];
+    List<String> hours = [];
     Set<Marker> markers = Set<Marker>();
     for (var location in locations) {
+      int y = 0;
+
+      for (int i in location["best_hours"]) {
+        hours.add("$i:00");
+        y++;
+      }
+
       Marker marker = Marker(
         markerId: MarkerId("${location["location_id"]}"),
         position: LatLng(location["latitude"], location["longitude"]),
         infoWindow: InfoWindow(
             title: location["location_name"],
+            // snippet:
+            //     'Live Count: ${location["live_count"]} \nTime Recommendation: ${location["best_hours"]} ',
             snippet:
-                'Live Count: ${location["live_count"]} \nTime Recommendation: ${location["best_hours"]} ',
+                'Estimated Crowd: ${location["crowd_estimation"]} \nTime Recommendation:  ${hours.toString().replaceAll("[", '').replaceAll("]", '')}',
             onTap: () {
               Navigator.of(context).push(CupertinoPageRoute(
                   builder: (context) => PlacePage(

@@ -30,6 +30,13 @@ class _PlacePageState extends State<PlacePage> {
         fit: BoxFit.cover,
       ));
     }
+    List<String> hours = [];
+    int x = 0;
+    for (int i in widget.location["best_hours"]) {
+      hours.add("$i:00");
+      x++;
+    }
+
     return Scaffold(
       appBar: CupertinoNavigationBar(
         middle: Text(widget.location["location_name"]),
@@ -80,7 +87,7 @@ class _PlacePageState extends State<PlacePage> {
                         width: 6,
                       ),
                       IconButtonWidget(
-                        buttonText: "Map View",
+                        buttonText: "Map",
                         icon: Icons.gps_fixed,
                         buttonColor: AppColors.error,
                         onPressed: () async {
@@ -100,7 +107,7 @@ class _PlacePageState extends State<PlacePage> {
                 ),
                 getRow(
                     title: "Estimated Crowd",
-                    subtitle: "[Values for Estimated Crowd Here]",
+                    subtitle: "${widget.location["crowd_estimation"]}",
                     iconData: Icons.person),
                 getRow(
                     title: "Address",
@@ -111,15 +118,28 @@ class _PlacePageState extends State<PlacePage> {
                     subtitle:
                         "${widget.location["result"]["formatted_phone_number"]}",
                     iconData: Icons.phone),
+                getRow(
+                    title: "Opening Hours",
+                    subtitle:
+                        "${widget.location["result"]["opening_hours"]["weekday_text"]}",
+                    iconData: Icons.phone),
 
                 getRow(
                     title: "Safe to Visit",
-                    subtitle: "${widget.location["safe_to_visit"]}",
+                    subtitle: widget.location["threshold"] >
+                            widget.location["crowd_estimation"]
+                        ? "Safe"
+                        : "Crowded",
                     iconData: Icons.favorite),
                 getRow(
-                    title: "Best Hours",
-                    subtitle: "${widget.location["best_hours"]}",
+                    title: "Time Recommendations",
+                    subtitle:
+                        "${hours.toString().replaceAll("[", '').replaceAll("]", '')}",
+                    // subtitle: "12:00\n1:00PM",
                     iconData: Icons.timelapse),
+                SizedBox(
+                  height: 100,
+                )
                 // Text("${getPrettyJSONString(widget.location)}")
                 // Get Directions
               ]),

@@ -1,5 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
+import 'package:flutter_phoenix/flutter_phoenix.dart';
 import 'package:wear/pages/loading.dart';
 import 'package:wear/pages/place_page.dart';
 import 'package:wear/pages/search.dart';
@@ -59,6 +61,17 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
       body: CustomScrollView(
         slivers: [
+          CupertinoSliverRefreshControl(
+            onRefresh: () {
+              Phoenix.rebirth(context);
+            },
+          ),
+          SliverPadding(
+            padding: const EdgeInsets.only(left: 20, right: 20),
+            sliver: SliverList(
+              delegate: SliverChildListDelegate.fixed([recentlyVisited(() {})]),
+            ),
+          ),
           SliverPadding(
             padding: const EdgeInsets.only(left: 20, right: 20),
             sliver: SliverList(
@@ -67,8 +80,13 @@ class _MyHomePageState extends State<MyHomePage> {
                   description1: "${arr[index]["result"]["formatted_address"]}",
                   description2:
                       "${arr[index]["result"]["formatted_phone_number"]}",
+                  safe: arr[index]["threshold"] > arr[index]["crowd_estimation"]
+                      ? true
+                      : false,
                   name: arr[index]["location_name"],
-                  count: arr[index]["live_count"],
+                  count: arr[index]["crowd_estimation"],
+
+                  // count: arr[index]["live_count"],
                   photo: API.parsePhotoString(
                       arr[index]["result"]["photos"][0]["photo_reference"]),
                   onTap: () {

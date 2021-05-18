@@ -26,6 +26,8 @@ dependencies:
   dio: ^4.0.0
   google_maps_flutter: ^2.0.4
   flutter_blurhash: ^0.6.0
+  flutter_phoenix: ^1.0.0
+  url_launcher: ^6.0.3
   random_color: ^1.0.5
   carousel_pro: ^1.0.0
   google_fonts: ^2.0.0
