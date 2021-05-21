@@ -34,6 +34,7 @@ class _StatisticsPageState extends State<StatisticsPage> {
           border: null,
         ),
         body: CustomScrollView(
+          physics: BouncingScrollPhysics(),
           slivers: [
             SliverPadding(
               padding: const EdgeInsets.only(left: 20, right: 20),

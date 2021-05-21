@@ -43,6 +43,7 @@ class _PlacePageState extends State<PlacePage> {
         border: null,
       ),
       body: CustomScrollView(
+        physics: BouncingScrollPhysics(),
         slivers: [
           SliverPadding(
             padding: const EdgeInsets.only(left: 10, right: 10, top: 10),

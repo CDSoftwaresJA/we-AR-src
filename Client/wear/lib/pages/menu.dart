@@ -47,8 +47,8 @@ class _MenuPageState extends State<MenuPage> {
               ),
               onPressed: () {
                 Navigator.pop(context);
-                Navigator.push(context,
-                    CupertinoPageRoute(builder: (context) => StatisticsPage()));
+                // Navigator.push(context,
+                //     CupertinoPageRoute(builder: (context) => StatisticsPage()));
               },
             ),
             FlatButton(

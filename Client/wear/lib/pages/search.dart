@@ -39,6 +39,7 @@ class _SearchPageState extends State<SearchPage> {
         border: null,
       ),
       body: CustomScrollView(
+        physics: BouncingScrollPhysics(),
         slivers: [
           SliverList(
               delegate: SliverChildListDelegate.fixed([

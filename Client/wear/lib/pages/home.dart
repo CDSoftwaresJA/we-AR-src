@@ -4,7 +4,6 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_phoenix/flutter_phoenix.dart';
 import 'package:wear/pages/loading.dart';
 import 'package:wear/pages/place_page.dart';
-import 'package:wear/pages/search.dart';
 import 'package:wear/utils/api.dart';
 import 'package:wear/utils/colors.dart';
 import 'package:wear/utils/transition.dart';
@@ -51,8 +50,8 @@ class _MyHomePageState extends State<MyHomePage> {
           child: IconButton(
             icon: Icon(Icons.search),
             onPressed: () {
-              Navigator.of(context)
-                  .push(CupertinoPageRoute(builder: (context) => SearchPage()));
+              // Navigator.of(context)
+              //     .push(CupertinoPageRoute(builder: (context) => SearchPage()));
             },
           ),
         ),
@@ -60,6 +59,7 @@ class _MyHomePageState extends State<MyHomePage> {
         border: null,
       ),
       body: CustomScrollView(
+        physics: BouncingScrollPhysics(),
         slivers: [
           CupertinoSliverRefreshControl(
             onRefresh: () {
