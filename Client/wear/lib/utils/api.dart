@@ -4,7 +4,7 @@ import 'package:dio/adapter.dart';
 import 'package:dio/dio.dart';
 
 class API {
-  static String endpoint = "https://18.116.105.133:8080/";
+  static String endpoint = "https://crowdsafe-capstone.herokuapp.com/";
 
   static Future<Map<String, dynamic>> getLocations() async {
     try {
